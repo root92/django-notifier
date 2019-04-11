@@ -232,7 +232,7 @@ class GroupPrefs(BaseModel):
 
     If notification is not explicitly set to True, then default to False.
     """
-    group = models.ForeignKey(Group)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
     notification = models.ForeignKey(Notification)
     backend = models.ForeignKey(Backend)
     notify = models.BooleanField(default=True)
@@ -243,7 +243,6 @@ class GroupPrefs(BaseModel):
     def __unicode__(self):
         return '%s:%s:%s' % (self.group, self.notification, self.backend)
 
-
 class UserPrefs(BaseModel):
     """
     Per user notification settings
@@ -251,7 +250,7 @@ class UserPrefs(BaseModel):
     Supercedes group setting.
     If notification preference is not explicitly set, then use group setting.
     """
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     notification = models.ForeignKey(Notification)
     backend = models.ForeignKey(Backend)
     notify = models.BooleanField(default=True)
@@ -275,7 +274,7 @@ class SentNotification(BaseModel):
     Record of every notification sent.
     """
     user = models.ForeignKey(User)
-    notification = models.ForeignKey(Notification)
+    notification = models.ForeignKey(Notification, on_delete=models.CASCADE)
     backend = models.ForeignKey(Backend)
     success = models.BooleanField()
     read = models.BooleanField(default=False)
